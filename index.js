@@ -42,11 +42,36 @@ async function run() {
       const tour = await tourCollection.findOne(query);
       res.send(tour);
     });
-
+    //GET MY OREDERS API
+    app.get("/myorders/:email", async (req, res) => {
+      const result = await orderCollection
+        .find({ email: req.params.email })
+        .toArray();
+      res.send(result);
+    });
     //ADD ORDERS API
     app.post("/orders", async (req, res) => {
       const order = req.body;
       const result = await orderCollection.insertOne(order);
+      res.json(result);
+    });
+    //UPDATE STATUS API
+    app.put("/orders/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedStatus = req.body;
+      console.log(updatedStatus);
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          tourstatus: updatedStatus.tourstatus,
+        },
+      };
+      const result = await orderCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
       res.json(result);
     });
 
