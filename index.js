@@ -22,6 +22,8 @@ async function run() {
     const database = client.db("tourGalaxyDB");
     const tourCollection = database.collection("tours");
     const orderCollection = database.collection("orders");
+    const blogCollection = database.collection("blogs");
+    const feedbacksCollection = database.collection("feedbacks");
 
     // GET ALL TOURS API
     app.get("/tours", async (req, res) => {
@@ -34,6 +36,18 @@ async function run() {
       const cursor = orderCollection.find({});
       const orders = await cursor.toArray();
       res.send(orders);
+    });
+    // GET ALL Blogs API
+    app.get("/blogs", async (req, res) => {
+      const cursor = blogCollection.find({});
+      const blogs = await cursor.toArray();
+      res.send(blogs);
+    });
+    // GET ALL Feedbacks API
+    app.get("/feedbacks", async (req, res) => {
+      const cursor = feedbacksCollection.find({});
+      const feedbacks = await cursor.toArray();
+      res.send(feedbacks);
     });
     //GET SINGLE DATA API
     app.get("/tours/:id", async (req, res) => {
