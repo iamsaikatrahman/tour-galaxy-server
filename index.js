@@ -49,6 +49,12 @@ async function run() {
         .toArray();
       res.send(result);
     });
+    //ADD TOURS API
+    app.post("/tours", async (req, res) => {
+      const tour = req.body;
+      const result = await tourCollection.insertOne(tour);
+      res.json(result);
+    });
     //ADD ORDERS API
     app.post("/orders", async (req, res) => {
       const order = req.body;
